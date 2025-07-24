@@ -1,3 +1,4 @@
+import { ISocket } from "@/interfaces/sockets.interface";
 import { Server, Socket } from "socket.io";
 
 interface RoomQueue {
@@ -5,12 +6,16 @@ interface RoomQueue {
   peerIds: string[];
 }
 
-export class VideoCallQueueManager {
-  private io: Server;
+export class VideoCallQueueManager implements ISocket {
+  public io: Server;
   private roomQueues: Map<string, string[]> = new Map(); // roomId -> peerIds
   private peerIdToSocketId: Map<string, string> = new Map(); // peerId -> socketId
 
-  constructor(io: Server) {
+  constructor() {
+    
+  }
+
+  public runIoServer(io: Server){
     this.io = io;
     this.initialize();
   }

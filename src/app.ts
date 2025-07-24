@@ -9,7 +9,7 @@ import serveStatic from "serve-static";
 import path from "path";
 import { createServer, Server as HttpServer } from "http";
 import { Socket, Server as SocketServer } from "socket.io";
-import { VideoCallQueueManager } from "./sockets/video-call.socket";
+import { ISocket } from "./interfaces/sockets.interface";
 class App{
 
     private app: express.Application;
@@ -17,9 +17,9 @@ class App{
     private io : SocketServer
     private env: string;
     private port: string | number;
-    private videoCallQueueManager: VideoCallQueueManager;
 
-    constructor(routes: Routes[]){
+
+    constructor( routes: Routes[], sockets: ISocket[]){
         this.app = express();
         this.server = createServer(this.app);
         this.io = new SocketServer(this.server, {
@@ -36,7 +36,13 @@ class App{
         this.initializeRoutes(routes);
         this.initializeSwagger();
         this.initializeErrorHandling();
-        this.videoCallQueueManager = new VideoCallQueueManager(this.io);
+        this.initializeSocket(sockets);
+    }
+
+    private initializeSocket(sockets: ISocket[]){
+        sockets.forEach((socket) => {
+            socket.runIoServer(this.io);
+        });
     }
 
     private initializeSwagger() {
