@@ -19,4 +19,5 @@ export class WordRequestDto {
 export class CreateWordRequestDto extends WordRequestDto {
     examplePronounciation: string;
     pronounciation: string;
+    createdById: string;
 }

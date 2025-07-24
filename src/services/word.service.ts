@@ -15,37 +15,29 @@ export class WordService extends BaseService implements IWordService{
     }
 
     async createWord(wordRequestDto: CreateWordRequestDto): Promise<Word> {
+        const language = await this._languageService.getLanguageByLangCode(wordRequestDto.languageCode);
 
-        const language = await this._languageService.getLanguageByLangCode(wordRequestDto.languageCode)
-
-        if(!language){
-            throw new HttpException(404, 'Language not found')
+        if (!language) {
+            throw new HttpException(404, 'Language not found');
         }
-
-        // const wordUnique = await this.prisma.word.findFirst({
-        //     where: {
-        //         word: {
-        //             equals: wordRequestDto.word,
-        //             mode: 'insensitive'
-        //         },
-        //         languageId: language.id
-        //     }
-        // });
 
         const word = await this.prisma.word.create({
             data: {
                 word: wordRequestDto.word,
                 definition: wordRequestDto.definition,
                 example: wordRequestDto.example,
+                directTranslation: wordRequestDto.directTranslation,
                 exampleTranslation: wordRequestDto.exampleTranslation,
                 pronounciation: wordRequestDto.pronounciation,
                 examplePronounciation: wordRequestDto.examplePronounciation,
                 languageId: language.id,
+                createdById: wordRequestDto.createdById,
                 createdAt: new Date(),
                 updatedAt: new Date()
             }
-        })
-        return word
+        });
+
+        return word;
     }
     async getWordById(id: string): Promise<Word> {
         throw new Error("Method not implemented.");

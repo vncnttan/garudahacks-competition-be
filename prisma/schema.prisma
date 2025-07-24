@@ -22,6 +22,7 @@ model User {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   leaderboard Leaderboard?
+  Word        Word[]
 }
 
 model Leaderboard {
@@ -47,10 +48,9 @@ model Word {
   examplePronounciation String
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
-
-  // Self-referential relation for translations
-  translations   Word[] @relation("WordTranslations")
-  translationsOf Word[] @relation("WordTranslations")
+  createdByUser         User     @relation(fields: [createdById], references: [id])
+  createdById           String
+  directTranslation     String[]
 
   @@index([word])
   @@index([languageId])

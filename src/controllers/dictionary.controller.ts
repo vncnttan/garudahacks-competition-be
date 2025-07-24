@@ -1,5 +1,6 @@
 import { WordRequestDto } from "@/dtos/word.dto";
 import { HttpException } from "@/exceptions/HttpException";
+import { RequestWithUser } from "@/interfaces/auth.interface";
 import { ILanguageService } from "@/interfaces/services/language.service.interface";
 import { IWordService } from "@/interfaces/services/word.service.interface";
 import { BaseResponseBuilder } from "@/utils/ResponseBuilder";
@@ -13,7 +14,7 @@ export class DictionaryController {
         this._wordService = wordService
     }
 
-    public createWord = async (req: Request, res: Response, next: NextFunction) => {
+    public createWord = async (req: RequestWithUser, res: Response, next: NextFunction) => {
         try {
             // Type assertion for files
             const files = req.files as { [fieldname: string]: Express.Multer.File[] };
@@ -38,7 +39,8 @@ export class DictionaryController {
                 pronounciation:  `/public/${pronunciationPath}`,
                 examplePronounciation: `/public/${examplePronunciationPath}`,
                 languageCode: wordRequestDto.languageCode,
-                directTranslation: wordRequestDto.directTranslation
+                directTranslation: wordRequestDto.directTranslation,
+                createdById: req.user.id
             })
             
             res.status(201).json(
