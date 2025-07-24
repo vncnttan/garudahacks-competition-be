@@ -4,6 +4,7 @@ import AuthRoute from "./routes/auth.route";
 import { serviceInjector } from "./utils/serviceInjector";
 import { LeaderboardRoute } from "./routes/leaderboard.route";
 import { DictionaryRoute } from "./routes/dictionary.route";
+import { LanguageRoute } from "./routes/language.route";
 import { WordleSocketManager } from "./sockets/wordle.socket";
 import { VideoCallQueueManager } from "./sockets/video-call.socket";
 
@@ -17,7 +18,8 @@ try {
     const app = new App([
             new AuthRoute(serviceInjector.authService, serviceInjector.leaderboardService),
             new LeaderboardRoute(serviceInjector.leaderboardService),
-            new DictionaryRoute(serviceInjector.wordService)
+            new DictionaryRoute(serviceInjector.wordService),
+            new LanguageRoute(serviceInjector.languageService),
         ], [
             new WordleSocketManager(serviceInjector.wordService),
             new VideoCallQueueManager()
