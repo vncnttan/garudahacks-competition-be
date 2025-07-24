@@ -5,16 +5,28 @@ import cors from "cors"
 import { errorMiddleware } from "./middlewares/error.middleware";
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger';
-
+import serveStatic from "serve-static";
+import path from "path";
+import { createServer, Server as HttpServer } from "http";
+import { Socket, Server as SocketServer } from "socket.io";
+import { VideoCallQueueManager } from "./sockets/video-call.socket";
 class App{
 
     private app: express.Application;
+    private server : HttpServer
+    private io : SocketServer
     private env: string;
     private port: string | number;
+    private videoCallQueueManager: VideoCallQueueManager;
 
     constructor(routes: Routes[]){
         this.app = express();
-
+        this.server = createServer(this.app);
+        this.io = new SocketServer(this.server, {
+            cors: {
+                origin: "*",
+            }
+        });
         this.env = NODE_ENV || "development";
         this.port = PORT || 3000;
 
@@ -24,6 +36,7 @@ class App{
         this.initializeRoutes(routes);
         this.initializeSwagger();
         this.initializeErrorHandling();
+        this.videoCallQueueManager = new VideoCallQueueManager(this.io);
     }
 
     private initializeSwagger() {
@@ -35,10 +48,10 @@ class App{
     }
 
     private initializeMiddlewares(){
-        this.app.use(express.json());
+        this.app.use("/public",serveStatic(path.join(__dirname, '..', 'public')));
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cors({
-            origin: FRONTEND_URL,
+            origin: "*",
         }));
         this.app.use(express.json());
     }
@@ -50,7 +63,7 @@ class App{
     }
 
     public listen(){
-        this.app.listen(PORT, () => {
+        this.server.listen(PORT, () => {
             console.log(`=================================`);
             console.log(`======= ENV: ${this.env} =======`);
             console.log(`🚀 App listening on the port ${this.port}`);
