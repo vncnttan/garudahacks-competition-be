@@ -17,7 +17,7 @@ export class LeaderboardService extends BaseService implements ILeaderboardServi
     async getLeaderboard(): Promise<(Leaderboard & { user: Pick<User, 'id' | 'username'> })[]> {
         const leaderboard = await this.prisma.leaderboard.findMany({
             orderBy: {
-                points: "desc"
+                points: "asc"
             },
             include: {
                 user: {
