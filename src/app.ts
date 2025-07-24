@@ -5,6 +5,8 @@ import cors from "cors"
 import { errorMiddleware } from "./middlewares/error.middleware";
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger';
+import serveStatic from "serve-static";
+import path from "path";
 
 class App{
 
@@ -35,7 +37,7 @@ class App{
     }
 
     private initializeMiddlewares(){
-        this.app.use(express.json());
+        this.app.use("/public",serveStatic(path.join(__dirname, '..', 'public')));
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cors({
             origin: FRONTEND_URL,

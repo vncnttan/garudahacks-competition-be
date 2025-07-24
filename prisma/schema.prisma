@@ -34,3 +34,35 @@ model Leaderboard {
 
   @@index([points])
 }
+
+model Word {
+  id                    String   @id @default(uuid())
+  language              Language @relation(fields: [languageId], references: [id])
+  languageId            String
+  word                  String
+  pronounciation        String
+  definition            String
+  example               String
+  exampleTranslation    String
+  examplePronounciation String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Self-referential relation for translations
+  translations   Word[] @relation("WordTranslations")
+  translationsOf Word[] @relation("WordTranslations")
+
+  @@index([word])
+  @@index([languageId])
+}
+
+model Language {
+  id           String   @id @default(uuid())
+  languageName String   @unique
+  languageCode String   @unique // e.g., 'id' for Indonesian, 'jv' for Javanese
+  words        Word[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([languageCode])
+}
