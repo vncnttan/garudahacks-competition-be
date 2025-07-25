@@ -1,4 +1,4 @@
-import { JWT_SECRET } from '@/config';
+import { JWT_SECRET } from '../config';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 import { serviceInjector } from '@/utils/serviceInjector';
 import { HttpException } from '@exceptions/HttpException';

@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { Routes } from "../interfaces/routes.interface";
-import { AuthController } from "@/controllers/auth.controller";
+import { AuthController } from "../controllers/auth.controller";
 import { IAuthService } from "@/interfaces/services/auth.service.interface";
 import validationMiddleware from "@/middlewares/validation.middleware";
-import { CreateUserRequestDto, LoginUserDto } from "@/dtos/users.dto";
+import { CreateUserRequestDto, LoginUserDto } from "../dtos/users.dto";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { ILeaderboardService } from "@/interfaces/services/leaderboard.service.interface";
 

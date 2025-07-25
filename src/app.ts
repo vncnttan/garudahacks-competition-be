@@ -1,6 +1,6 @@
 import express from "express";
 import { Routes } from "@/interfaces/routes.interface";
-import { FRONTEND_URL, NODE_ENV, PORT } from "@/config";
+import { NODE_ENV, PORT } from "./config";
 import cors from "cors"
 import { errorMiddleware } from "./middlewares/error.middleware";
 import swaggerUi from 'swagger-ui-express';

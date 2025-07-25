@@ -1,4 +1,4 @@
-import { UserLevel } from "@/dtos/users.dto";
+import { UserLevel } from "../dtos/users.dto";
 
 export class LevelCalculator {
     private static BASE_EXP = 500; // Base experience needed for level 2

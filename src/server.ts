@@ -1,5 +1,5 @@
-import App from "@/app";
-import validateEnv from "@/utils/validateEnv";
+import App from "./app";
+import validateEnv from "./utils/validateEnv";
 import AuthRoute from "./routes/auth.route";
 import { serviceInjector } from "./utils/serviceInjector";
 import { LeaderboardRoute } from "./routes/leaderboard.route";

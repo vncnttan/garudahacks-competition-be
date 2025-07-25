@@ -19,62 +19,61 @@
         "pretty": true,
         "sourceMap": true,
         "declaration": true,
-        "outDir": "dist",
+        "outDir": "./dist",
+        "rootDir": "./src",
         "allowJs": true,
         "noEmit": false,
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "importHelpers": true,
-        "baseUrl": "src",
+        "baseUrl": ".",
         "paths": {
             "@/*": [
-                "*"
+                "src/*"
             ],
             "@sockets/*": [
-                "sockets/*"
+                "src/sockets/*"
             ],
             "@config": [
-                "config"
+                "src/config"
             ],
             "@controllers/*": [
-                "controllers/*"
+                "src/controllers/*"
             ],
             "@databases": [
-                "databases"
+                "src/databases"
             ],
             "@dtos/*": [
-                "dtos/*"
+                "src/dtos/*"
             ],
             "@exceptions/*": [
-                "exceptions/*"
+                "src/exceptions/*"
             ],
             "@interfaces/*": [
-                "interfaces/*"
+                "src/interfaces/*"
             ],
             "@middlewares/*": [
-                "middlewares/*"
+                "src/middlewares/*"
             ],
             "@models/*": [
-                "models/*"
+                "src/models/*"
             ],
             "@routes/*": [
-                "routes/*"
+                "src/routes/*"
             ],
             "@services/*": [
-                "services/*"
+                "src/services/*"
             ],
             "@utils/*": [
-                "utils/*"
+                "src/utils/*"
             ],
             "@/generated/prisma": [
-                "../generated/prisma"
+                "node_modules/.prisma/client"
             ]
         }
     },
     "include": [
-        "src/**/*.ts",
-        "src/**/*.json",
-        ".env"
+        "src/**/*"
     ],
     "exclude": [
         "node_modules",

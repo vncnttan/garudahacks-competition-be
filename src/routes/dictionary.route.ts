@@ -1,5 +1,5 @@
 import { audioFields, upload } from "@/config/multer";
-import { DictionaryController } from "@/controllers/dictionary.controller";
+import { DictionaryController } from "../controllers/dictionary.controller";
 import { Routes } from "@/interfaces/routes.interface";
 import { IWordService } from "@/interfaces/services/word.service.interface";
 import authMiddleware from "@/middlewares/auth.middleware";

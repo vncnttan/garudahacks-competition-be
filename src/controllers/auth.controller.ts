@@ -1,4 +1,4 @@
-import { CreateUserRequestDto, CreateUserResponseDto, LoginUserDto, LoginUserResponseDto } from "@/dtos/users.dto"
+import { CreateUserRequestDto, CreateUserResponseDto, LoginUserDto, LoginUserResponseDto } from "../dtos/users.dto"
 import { HttpException } from "@/exceptions/HttpException"
 import { PrismaClient, User } from "@/generated/prisma"
 import { RequestWithUser } from "@/interfaces/auth.interface"
