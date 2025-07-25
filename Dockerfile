@@ -29,7 +29,9 @@ COPY --from=base /app/prisma ./prisma
 
 RUN mkdir -p /app/public
 
-ENV DATABASE_URL="postgresql://postgres:P@55w0rdpg4dm1n@makna.vncnttan.my.id:5432/garuda-hack-6.0-be?schema=public"
+ENV DATABASE_URL="postgresql://postgres:P@55w0rdpg4dm1n@makna.vncnttan.my.id:5439/garuda-hack-6.0-be?schema=public"
+
+RUN npx prisma migrate reset --force
 
 RUN npx prisma generate
 
@@ -43,4 +45,4 @@ RUN npx prisma migrate deploy
 # Expose the port (default 3000, can be overridden)
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run","prisma:seed", "&&", "npm", "run", "start"]
