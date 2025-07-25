@@ -3,6 +3,7 @@ import { PrismaClient } from '../node_modules/.prisma/client'
 const prisma = new PrismaClient()
 async function main() {
 
+  console.log('Seeding database...')
   const hashedPassword = await hash('admin', 10)
 
   const user = await prisma.user.create({

@@ -29,4 +29,4 @@ COPY --from=base /app/prisma ./prisma
 
 RUN mkdir -p /app/public
 
-CMD ["npm", "run", "prisma:deploy", "&&", "npm", "run", "start"]
+CMD ["npm", "run", "prisma:generate", "&&", "npm", "run", "start"]
