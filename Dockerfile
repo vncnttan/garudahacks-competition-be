@@ -51,4 +51,4 @@ USER nodejs
 EXPOSE 3000
 
 # Start the application
-CMD ["npx", "run", "prisma", "migrate", "deploy","&&", "npm", "run", "start"]
+CMD ["npm", "run", "start"]
