@@ -25,16 +25,16 @@ jobs:
 
       - name: Build Docker image and give it tag
         run: |
-          docker build -t makna-backend:latest .
-          docker tag makna-backend:latest localhost:5000/makna-backend:latest
+          docker build -t makna-be-6.0:latest .
+          docker tag makna-be-6.0:latest localhost:5000/makna-be-6.0:latest
 
       - name: Push Docker image to local registry
         run: |
-          docker push localhost:5000/makna-backend:latest
+          docker push localhost:5000/makna-be-6.0:latest
 
       - name: Pull Docker image on runner
         run: |
-          docker pull localhost:5000/makna-backend:latest
+          docker pull localhost:5000/makna-be-6.0:latest
 
       - name: Run Docker Compose
         run: |
