@@ -19,7 +19,6 @@ export class LanguageRoute implements Routes {
     private initializeRoutes() {
         this.router.get(
             `${this.path}`,
-            authMiddleware,
             this.languageController.getAllLanguages
         );
     }
