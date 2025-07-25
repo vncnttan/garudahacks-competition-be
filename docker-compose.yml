@@ -16,8 +16,8 @@ services:
     volumes:
       - ./public:/app/public
     networks:
-      - makna-backend-network
       - reverse-proxy
+      - makna-backend-network
 
 networks:
   makna-backend-network:
