@@ -35,10 +35,6 @@ RUN npx prisma migrate reset --force
 
 RUN npx prisma generate
 
-# Document environment variables
-ENV NODE_ENV=production
-# Required: DATABASE_URL, JWT_SECRET, FRONTEND_URL, PORT
-
 # Run Prisma migrations on container start (optional, comment if not needed)
 RUN npx prisma migrate deploy
 
