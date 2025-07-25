@@ -13,7 +13,6 @@ services:
       - PORT=3000
       - FRONTEND_URL=makna.vncnttan.my.id
       - JWT_SECRET=f90f0df1748398b1d2806db42249bf7b
-    command: npm run start
     volumes:
       - ./public:/app/public
     networks:
