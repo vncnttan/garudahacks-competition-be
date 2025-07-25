@@ -36,13 +36,6 @@ jobs:
         run: |
           docker pull localhost:5000/makna-backend:latest
 
-      - name: Create .env file
-        run: |
-          echo DATABASE_URL=${{ secrets.DATABASE_URL }} > .env
-          echo PORT=${{ secrets.PORT }} >> .env
-          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
-          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
-
       - name: Run Docker Compose
         run: |
           docker compose down
