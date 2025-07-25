@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Word" ALTER COLUMN "dislikedByIds" SET DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "likedByIds" SET DEFAULT ARRAY[]::TEXT[];

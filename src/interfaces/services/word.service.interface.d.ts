@@ -6,5 +6,8 @@ export interface IWordService {
     getWordById(id: string) : Promise<Word>
     getTranslationList(languageSrc: string, languageDst: string, prompt: string): Promise<Word[]>;
     getRandomWord(langCode : string): Promise<Word>;
+    toogleLike(wordId: string, userId: string
+    ): Promise<Word>;
+    getMoreWords(word: string): Promise<Word[]>;
 }
 

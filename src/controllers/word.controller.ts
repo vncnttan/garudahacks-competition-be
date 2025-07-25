@@ -1,4 +1,6 @@
+import { RequestWithUser } from "@/interfaces/auth.interface";
 import { IWordService } from "@/interfaces/services/word.service.interface";
+import { BaseResponseBuilder } from "@/utils/ResponseBuilder";
 
 
 export class WordController {
@@ -23,6 +25,34 @@ export class WordController {
                 success: true,
                 data: translations
             });
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+    public getMoreWords = async (req, res) => {
+        try {
+            const { word } = req.params;
+            const words = await this._wordService.getMoreWords(word);
+            return res.status(200).json(new BaseResponseBuilder().withSuccess(true).withMessage(`Words fetched successfully`).withData(words));
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+    public toogleLike = async (req: RequestWithUser, res) => {
+        try {
+            const { wordId} = req.body;
+
+            const word = await this._wordService.toogleLike(wordId, req.user.id);
+            return res.status(200).json(new BaseResponseBuilder().withSuccess(true).withMessage(`Word ${word.likedByIds.find((id) => id === req.user.id) ? 'liked' : 'unliked'} successfully`).withData(word));
+            
         } catch (error) {
             return res.status(500).json({
                 success: false,

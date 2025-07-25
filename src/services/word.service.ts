@@ -6,14 +6,87 @@ import { CreateWordRequestDto } from "@/dtos/word.dto";
 import { ILanguageService } from "@/interfaces/services/language.service.interface";
 import { HttpException } from "@/exceptions/HttpException";
 
-export class WordService extends BaseService implements IWordService{
+export class WordService extends BaseService implements IWordService{
 
     private _languageService: ILanguageService
+    
 
-    constructor(languageService: ILanguageService){
+    constructor(languageService: ILanguageService ){
         super()
         this._languageService = languageService
     }
+    async getMoreWords(word: string): Promise<Word[]> {
+        const words = await this.prisma.word.findMany({
+            where: {
+                word: {
+                    equals: word,
+                    mode: 'insensitive'
+                }
+            },
+            orderBy:{
+                likedBy:{
+                    _count: 'desc'
+                }
+            }
+        })
+
+        return words
+    }
+    async toogleLike(wordId: string, userId: string): Promise<Word> {
+        return await this.prisma.$transaction(async (tx) => {
+            const targetWord = await tx.word.findUnique({
+                where: { id: wordId },
+                include: {
+                    likedBy: true,
+                }
+            });
+
+            if (!targetWord) {
+                throw new HttpException(404, 'Word not found');
+            }
+
+            // Initialize arrays if they don't exist
+            const likedByIds = targetWord.likedByIds || [];
+
+            const isLiked = likedByIds.includes(userId);
+
+            let updatedLikedByIds = [...likedByIds];
+
+            if (isLiked) {
+                updatedLikedByIds = updatedLikedByIds.filter(id => id !== userId);
+            } else {
+                updatedLikedByIds.push(userId);
+            }
+
+            // Update the word with new arrays
+            const updatedWord = await tx.word.update({
+                where: { id: wordId },
+                data: {
+                    likedByIds: updatedLikedByIds,
+                    likedBy: {
+                        connect: isLiked ? undefined : { id: userId },
+                        disconnect: isLiked ? { id: userId } : undefined
+                    },
+                    
+                },
+                include: {
+                    likedBy: {
+                        select: {
+                            id: true,
+                            username: true
+                        }
+                    },
+                    
+                }
+            });
+
+            return updatedWord;
+        });
+    }
+
+
+    
+
     async getRandomWord(langCode: string): Promise<Word> {
         const words = await this.prisma.word.findMany({
             where: {
