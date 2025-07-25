@@ -1,35 +1,54 @@
-# ---- Base Node image ----
-FROM node:20-alpine AS base
+# Build Stage
+FROM node:20-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies (only package.json and lock first for better caching)
-COPY package.json package-lock.json ./
+# Install dependencies for build
+COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the code
+# Copy source code
 COPY . .
 
-# Build the TypeScript code to dist/
+# Build the application
 RUN npm run build
 
+# Generate Prisma Client
+RUN npx prisma generate
 
-# ---- Production image ----
-FROM node:20-alpine AS prod
+# Production Stage
+FROM node:20-alpine AS production
+
+# Add non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs
+
 WORKDIR /app
 
-# Copy only built code and node_modules from build stage
-COPY --from=base /app/dist ./dist
-COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/package.json ./
-COPY --from=base /app/tsconfig.json ./
-COPY --from=base /app/prisma ./prisma
+# Install production dependencies only
+COPY package*.json ./
+RUN npm install
+
+# Copy built files from builder
+COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nodejs:nodejs /app/prisma ./prisma
+# COPY --from=builder --chown=nodejs:nodejs /app/public ./public
+COPY --from=builder --chown=nodejs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+
 
 RUN mkdir -p /app/public
 
-RUN npx prisma generate
 
+
+# Set production environment
+ENV NODE_ENV=production
+
+# Use non-root user
+USER nodejs
+
+
+# Expose port
 EXPOSE 3000
 
+# Start the application
 CMD ["npm", "run", "start"]
