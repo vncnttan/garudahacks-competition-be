@@ -10,6 +10,7 @@ import path from "path";
 import { createServer, Server as HttpServer } from "http";
 import { Socket, Server as SocketServer } from "socket.io";
 import { ISocket } from "./interfaces/sockets.interface";
+import { hostname } from "os";
 class App{
 
     private app: express.Application;
@@ -69,7 +70,7 @@ class App{
     }
 
     public listen(){
-        this.server.listen(PORT, () => {
+        this.server.listen(PORT, "0.0.0.0" ,() => {
             console.log(`=================================`);
             console.log(`======= ENV: ${this.env} =======`);
             console.log(`🚀 App listening on the port ${this.port}`);

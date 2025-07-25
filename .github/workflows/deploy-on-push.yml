@@ -25,7 +25,7 @@ jobs:
 
       - name: Build Docker image and give it tag
         run: |
-          docker build -t makna-be-6.0:latest .
+          docker build  --no-cache -t makna-be-6.0:latest .
           docker tag makna-be-6.0:latest localhost:5000/makna-be-6.0:latest
 
       - name: Push Docker image to local registry
