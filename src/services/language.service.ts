@@ -3,9 +3,6 @@ import { ILanguageService } from "@/interfaces/services/language.service.interfa
 import { BaseService } from "./base.service";
 
 export class LanguageService extends BaseService implements ILanguageService{
-    constructor(){
-        super()
-    }
     async getLanguageByLangCode(langCode: string): Promise<Language> {
         const language = await this.prisma.language.findFirst({
             where: {

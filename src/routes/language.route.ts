@@ -1,4 +1,4 @@
-import { LanguageController } from "@/controllers/language.controller";
+import { LanguageController } from "../controllers/language.controller";
 import { Routes } from "@/interfaces/routes.interface";
 import { ILanguageService } from "@/interfaces/services/language.service.interface";
 import authMiddleware from "@/middlewares/auth.middleware";

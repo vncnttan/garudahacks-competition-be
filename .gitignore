@@ -4,4 +4,8 @@ node_modules
 
 /generated/prisma
 
+/public/*
+
 .vscode
+
+dist
