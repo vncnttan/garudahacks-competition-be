@@ -23,6 +23,7 @@ model User {
   updatedAt   DateTime     @updatedAt
   leaderboard Leaderboard?
   Word        Word[]
+  likedWords  Word[]       @relation("LikedBy")
 }
 
 model Leaderboard {
@@ -51,6 +52,8 @@ model Word {
   createdByUser         User     @relation(fields: [createdById], references: [id])
   createdById           String
   directTranslation     String[]
+  likedBy               User[]   @relation("LikedBy")
+  likedByIds            String[] @default([])
 
   @@index([word])
   @@index([languageId])

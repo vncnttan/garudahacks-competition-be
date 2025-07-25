@@ -1,4 +1,4 @@
-import { IsArray, IsString } from "class-validator";
+import { IsArray, IsEnum, IsString } from "class-validator";
 
 export class WordRequestDto {
     @IsString()
@@ -20,4 +20,10 @@ export class CreateWordRequestDto extends WordRequestDto {
     examplePronounciation: string;
     pronounciation: string;
     createdById: string;
+}
+
+
+export class WordLikeRequestDto {
+    @IsString()
+    wordId: string;
 }
