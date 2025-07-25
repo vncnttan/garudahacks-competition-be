@@ -4,6 +4,7 @@ services:
     build: .
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=reverse-proxy"
       - "traefik.http.routers.makna-api-backend.rule=Host(`api.makna.vncnttan.my.id`)"
       - "traefik.http.routers.makna-api-backend.entrypoints=websecure"
       - "traefik.http.routers.makna-api-backend.tls.certresolver=app1"
@@ -20,8 +21,8 @@ services:
       - makna-backend-network
 
 networks:
+  reverse-proxy:
+    external: true
   makna-backend-network:
     external: true
 
-  reverse-proxy:
-    external: true
