@@ -2,10 +2,9 @@ import { Word } from "@/generated/prisma";
 import axios from "axios"
 import { IWordService } from "@/interfaces/services/word.service.interface";
 import { BaseService } from "./base.service";
-import { CreateWordRequestDto, WordRequestDto } from "@/dtos/word.dto";
+import { CreateWordRequestDto } from "@/dtos/word.dto";
 import { ILanguageService } from "@/interfaces/services/language.service.interface";
 import { HttpException } from "@/exceptions/HttpException";
-import { log } from "console";
 
 export class WordService extends BaseService implements IWordService{
 
