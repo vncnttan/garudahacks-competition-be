@@ -70,7 +70,7 @@ class App{
     }
 
     public listen(){
-        this.server.listen(PORT, "0.0.0.0" ,() => {
+        this.server.listen(PORT ,() => {
             console.log(`=================================`);
             console.log(`======= ENV: ${this.env} =======`);
             console.log(`🚀 App listening on the port ${this.port}`);
