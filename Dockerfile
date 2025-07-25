@@ -29,6 +29,8 @@ COPY --from=base /app/prisma ./prisma
 
 RUN mkdir -p /app/public
 
+ENV DATABASE_URL="postgresql://postgres:P@55w0rdpg4dm1n@pgdatabase:5432/garuda-hack-6.0-be?schema=public"
+
 RUN npx prisma generate
 
 # Document environment variables
