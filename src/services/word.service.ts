@@ -15,7 +15,23 @@ export class WordService extends BaseService implements IWordService{
         super()
         this._languageService = languageService
     }
-
+    async getRandomWord(langCode: string): Promise<Word> {
+        const words = await this.prisma.word.findMany({
+            where: {
+                language: {
+                    languageCode: langCode
+                },
+                
+            }
+        });
+        // Filter by length in JS since Prisma does not support string length filter directly
+        const filteredWords = words.filter(w => w.word.length >= 2 && w.word.length <= 6);
+        if (filteredWords.length === 0) {
+            throw new HttpException(404, 'No words found');
+        }
+        const randomIndex = Math.floor(Math.random() * filteredWords.length);
+        return filteredWords[randomIndex];
+    }
     async createWord(wordRequestDto: CreateWordRequestDto): Promise<Word> {
         const language = await this._languageService.getLanguageByLangCode(wordRequestDto.languageCode);
 
@@ -44,7 +60,6 @@ export class WordService extends BaseService implements IWordService{
     async getWordById(id: string): Promise<Word> {
         throw new Error("Method not implemented.");
     }
-<<<<<<< HEAD
     async getTranslationList(languageSrc: string, languageDst: string, prompt: string): Promise<Word[]> {
 
         console.log("Fetching translation list with params:", { languageSrc, languageDst, prompt });
@@ -81,24 +96,4 @@ export class WordService extends BaseService implements IWordService{
             .map((id) => wordMap.get(id))
             .filter((word): word is Word => word !== undefined);
     } 
-=======
-
-    async getRandomWord(langCode: string): Promise<Word> {
-        const words = await this.prisma.word.findMany({
-            where: {
-                language: {
-                    languageCode: langCode
-                },
-                
-            }
-        });
-        // Filter by length in JS since Prisma does not support string length filter directly
-        const filteredWords = words.filter(w => w.word.length >= 2 && w.word.length <= 6);
-        if (filteredWords.length === 0) {
-            throw new HttpException(404, 'No words found');
-        }
-        const randomIndex = Math.floor(Math.random() * filteredWords.length);
-        return filteredWords[randomIndex];
-    }
->>>>>>> main
 }
