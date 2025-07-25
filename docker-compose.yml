@@ -1,17 +1,6 @@
 version: "3.8"
 services:
-  pgdatabase:
-    image: postgres:latest
-    restart: always
-    ports:
-      - "5439:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=P@55w0rdpg4dm1n
-    volumes:
-      - pgdatabase:/var/lib/postgresql/data
-    networks:
-      - makna-backend-network
+
   makna-backend:
     build: .
     labels:
@@ -33,11 +22,9 @@ services:
       - makna-backend-network
       - reverse-proxy
 
-volumes:
-  pgdatabase:
-
 networks:
   makna-backend-network:
-    driver: bridge
+    external: true
+
   reverse-proxy:
     external: true
