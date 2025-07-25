@@ -22,8 +22,11 @@ services:
       - "traefik.http.services.makna-backend.loadbalancer.server.port=3000"
     depends_on:
       - pgdatabase
-    env_file:
-      - .env
+    environment:
+      - DATABASE_URL="postgresql://postgres:P@55w0rdpg4dm1n@pgdatabase:5432/garuda-hack-6.0-be?schema=public"
+      - PORT="3000"
+      - FRONTEND_URL="localhost:8080"
+      - JWT_SECRET="secret123"
     volumes:
       - ./public:/app/public
     networks:
