@@ -30,5 +30,7 @@ export class WordRoute implements Routes {
             validationMiddleware(WordLikeRequestDto, "body"),
             this.wordController.toogleLike
         )
+
+        this.router.get(`${this.path}/:word`, this.wordController.getMoreWords)
     }
 }

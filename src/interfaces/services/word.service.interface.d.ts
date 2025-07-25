@@ -8,5 +8,6 @@ export interface IWordService {
     getRandomWord(langCode : string): Promise<Word>;
     toogleLike(wordId: string, userId: string
     ): Promise<Word>;
+    getMoreWords(word: string): Promise<Word[]>;
 }
 

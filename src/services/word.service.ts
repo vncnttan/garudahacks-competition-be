@@ -15,6 +15,23 @@ export class WordService extends BaseService implements IWordService{
         super()
         this._languageService = languageService
     }
+    async getMoreWords(word: string): Promise<Word[]> {
+        const words = await this.prisma.word.findMany({
+            where: {
+                word: {
+                    equals: word,
+                    mode: 'insensitive'
+                }
+            },
+            orderBy:{
+                likedBy:{
+                    _count: 'desc'
+                }
+            }
+        })
+
+        return words
+    }
     async toogleLike(wordId: string, userId: string): Promise<Word> {
         return await this.prisma.$transaction(async (tx) => {
             const targetWord = await tx.word.findUnique({

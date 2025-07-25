@@ -33,6 +33,19 @@ export class WordController {
         }
     }
 
+    public getMoreWords = async (req, res) => {
+        try {
+            const { word } = req.params;
+            const words = await this._wordService.getMoreWords(word);
+            return res.status(200).json(new BaseResponseBuilder().withSuccess(true).withMessage(`Words fetched successfully`).withData(words));
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
     public toogleLike = async (req: RequestWithUser, res) => {
         try {
             const { wordId} = req.body;
