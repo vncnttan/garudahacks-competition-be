@@ -4,8 +4,6 @@ import { ILanguageService } from "@/interfaces/services/language.service.interfa
 import authMiddleware from "@/middlewares/auth.middleware";
 import { Router } from "express";
 
-
-
 export class LanguageRoute implements Routes {
     public path = '/languages'
     public router = Router();

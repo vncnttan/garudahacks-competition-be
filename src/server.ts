@@ -5,6 +5,7 @@ import { serviceInjector } from "./utils/serviceInjector";
 import { LeaderboardRoute } from "./routes/leaderboard.route";
 import { DictionaryRoute } from "./routes/dictionary.route";
 import { LanguageRoute } from "./routes/language.route";
+import { WordRoute } from "./routes/word.route";
 
 console.log("App starting...")
 
@@ -17,7 +18,8 @@ try {
             new AuthRoute(serviceInjector.authService, serviceInjector.leaderboardService),
             new LeaderboardRoute(serviceInjector.leaderboardService),
             new DictionaryRoute(serviceInjector.wordService),
-            new LanguageRoute(serviceInjector.languageService)
+            new LanguageRoute(serviceInjector.languageService),
+            new WordRoute(serviceInjector.wordService)
         ]);
     console.log("App initialized !");
     app.listen();
