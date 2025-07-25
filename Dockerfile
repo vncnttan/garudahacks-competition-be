@@ -34,7 +34,9 @@ ENV NODE_ENV=production
 # Required: DATABASE_URL, JWT_SECRET, FRONTEND_URL, PORT
 
 # Run Prisma migrations on container start (optional, comment if not needed)
-CMD npx prisma migrate deploy && npm run start
+RUN npx prisma migrate deploy
 
 # Expose the port (default 3000, can be overridden)
 EXPOSE 3000
+
+CMD ["npm", "run", "start"]
