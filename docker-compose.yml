@@ -8,27 +8,31 @@ services:
       - POSTGRES_PASSWORD=P@55w0rdpg4dm1n
     volumes:
       - pgdatabase:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     networks:
-      - garuda-hacks
-
-  backend:
+      - makna-backend-network
+  makna-backend:
     build: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.makna-backend.rule=Host(`makna.be.vncnttan.my.id`)"
+      - "traefik.http.routers.makna-backend.entrypoints=websecure"
+      - "traefik.http.routers.makna-backend.tls.certresolver=app1"
+      - "traefik.http.services.makna-backend.loadbalancer.server.port=3000"
     depends_on:
       - pgdatabase
     env_file:
       - .env
-    ports:
-      - "3000:3000"
     volumes:
       - ./public:/app/public
     networks:
-      - garuda-hacks
+      - makna-backend-network
+      - reverse-proxy
 
 volumes:
   pgdatabase:
 
 networks:
-  garuda-hacks:
+  makna-backend-network:
+    driver: bridge
+  reverse-proxy:
     external: true
