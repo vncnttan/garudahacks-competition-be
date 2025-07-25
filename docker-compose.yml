@@ -1,13 +1,13 @@
 version: "3.8"
 services:
-  makna-backend:
+  makna-backend-ghq-6.0:
     build: .
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.makna-backend.rule=Host(`makna.be.vncnttan.my.id`)"
-      - "traefik.http.routers.makna-backend.entrypoints=websecure"
-      - "traefik.http.routers.makna-backend.tls.certresolver=app1"
-      - "traefik.http.services.makna-backend.loadbalancer.server.port=3000"
+      - "traefik.http.routers.makna-backend-ghq-6.0.rule=Host(`makna.be.vncnttan.my.id`)"
+      - "traefik.http.routers.makna-backend-ghq-6.0.entrypoints=websecure"
+      - "traefik.http.routers.makna-backend-ghq-6.0.tls.certresolver=app1"
+      - "traefik.http.services.makna-backend-ghq-6.0.loadbalancer.server.port=3000"
     environment:
       - DATABASE_URL=postgresql://postgres:P@55w0rdpg4dm1n@database-pgdatabase-1:5432/garuda-hack-6.0-be?schema=public
       - PORT=3000
