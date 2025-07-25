@@ -15,23 +15,18 @@ COPY . .
 RUN npm run build
 
 
-
 # ---- Production image ----
 FROM node:20-alpine AS prod
-
 WORKDIR /app
 
+# Copy only built code and node_modules from build stage
 COPY --from=base /app/dist ./dist
 COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/package.json ./
 COPY --from=base /app/tsconfig.json ./
 COPY --from=base /app/prisma ./prisma
-COPY --from=base /app/public ./public
+# COPY --from=base /app/public ./public
 
-RUN npx prisma generate
-
-ENV NODE_ENV=production
-
-EXPOSE 3000
+RUN mkdir -p /app/public
 
 CMD ["npm", "run", "prisma:deploy", "&&", "npm", "run", "start"]
