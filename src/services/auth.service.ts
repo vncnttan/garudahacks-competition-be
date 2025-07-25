@@ -1,4 +1,4 @@
-import { JWT_SECRET } from "@/config";
+import { JWT_SECRET } from "../config";
 import { CreateUserRequestDto, LoginUserDto, LoginUserResponseDto } from "@/dtos/users.dto";
 import { HttpException } from "@/exceptions/HttpException";
 import { PrismaClient, User } from "@/generated/prisma";

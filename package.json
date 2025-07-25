@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --inspect",
-    "build": "swc src -d dist --source-maps --copy-files",
+    "build": "prisma generate && node esbuild.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
@@ -39,14 +39,19 @@
     "serve-static": "^2.2.0",
     "socket.io": "^4.8.1",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "tsc-alias": "^1.8.8"
   },
   "devDependencies": {
+    "@swc/cli": "^0.7.8",
+    "@swc/core": "^1.13.2",
     "@types/express": "^5.0.3",
     "@types/node": "^24.1.0",
+    "esbuild": "^0.25.8",
     "nodemon": "^3.1.10",
     "prisma": "^6.12.0",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
   }

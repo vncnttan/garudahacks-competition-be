@@ -1,16 +1,17 @@
+import { ISocket } from "@/interfaces/sockets.interface";
 import { Server, Socket } from "socket.io";
 
-interface RoomQueue {
-  roomId: string;
-  peerIds: string[];
-}
 
-export class VideoCallQueueManager {
-  private io: Server;
+export class VideoCallQueueManager implements ISocket {
+  public io: Server;
   private roomQueues: Map<string, string[]> = new Map(); // roomId -> peerIds
   private peerIdToSocketId: Map<string, string> = new Map(); // peerId -> socketId
 
-  constructor(io: Server) {
+  constructor() {
+    
+  }
+
+  public runIoServer(io: Server){
     this.io = io;
     this.initialize();
   }
@@ -18,6 +19,7 @@ export class VideoCallQueueManager {
   private initialize() {
     this.io.on("connection", (socket: Socket) => {
       socket.on("video-call/queue/join", (roomId: string, peerId: string) => {
+        console.log("User connected to video call queue, Peer ID : ", peerId)
         const queue = this.roomQueues.get(roomId) || [];
         queue.push(peerId);
         this.roomQueues.set(roomId, queue);

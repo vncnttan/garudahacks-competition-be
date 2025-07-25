@@ -1,11 +1,16 @@
-import App from "@/app";
-import validateEnv from "@/utils/validateEnv";
+import App from "./app";
+import validateEnv from "./utils/validateEnv";
 import AuthRoute from "./routes/auth.route";
 import { serviceInjector } from "./utils/serviceInjector";
 import { LeaderboardRoute } from "./routes/leaderboard.route";
 import { DictionaryRoute } from "./routes/dictionary.route";
 import { LanguageRoute } from "./routes/language.route";
+<<<<<<< HEAD
 import { WordRoute } from "./routes/word.route";
+=======
+import { WordleSocketManager } from "./sockets/wordle.socket";
+import { VideoCallQueueManager } from "./sockets/video-call.socket";
+>>>>>>> main
 
 console.log("App starting...")
 
@@ -19,7 +24,13 @@ try {
             new LeaderboardRoute(serviceInjector.leaderboardService),
             new DictionaryRoute(serviceInjector.wordService),
             new LanguageRoute(serviceInjector.languageService),
+<<<<<<< HEAD
             new WordRoute(serviceInjector.wordService)
+=======
+        ], [
+            new WordleSocketManager(serviceInjector.wordService),
+            new VideoCallQueueManager()
+>>>>>>> main
         ]);
     console.log("App initialized !");
     app.listen();

@@ -1,14 +1,28 @@
 version: "3.8"
 services:
-  postgres:
-    image: postgres:latest
-    restart: always
+  makna-backend:
+    build: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.makna-backend.rule=Host(`makna.be.vncnttan.my.id`)"
+      - "traefik.http.routers.makna-backend.entrypoints=websecure"
+      - "traefik.http.routers.makna-backend.tls.certresolver=app1"
+      - "traefik.http.services.makna-backend.loadbalancer.server.port=3000"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - DATABASE_URL=postgresql://postgres:P@55w0rdpg4dm1n@database-pgdatabase-1:5432/garuda-hack-6.0-be?schema=public
+      - PORT=3000
+      - FRONTEND_URL=makna.vncnttan.my.id
+      - JWT_SECRET=f90f0df1748398b1d2806db42249bf7b
+    command: npm run start
     volumes:
-      - postgres:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-volumes:
-  postgres:
+      - ./public:/app/public
+    networks:
+      - makna-backend-network
+      - reverse-proxy
+
+networks:
+  makna-backend-network:
+    external: true
+
+  reverse-proxy:
+    external: true

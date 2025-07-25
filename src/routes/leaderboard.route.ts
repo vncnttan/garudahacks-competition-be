@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Routes } from "@/interfaces/routes.interface";
-import { LeaderboardController } from "@/controllers/leaderboard.controller";
+import { LeaderboardController } from "../controllers/leaderboard.controller";
 import { ILeaderboardService } from "@/interfaces/services/leaderboard.service.interface";
 import authMiddleware from "@/middlewares/auth.middleware";
 
