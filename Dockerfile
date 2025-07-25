@@ -11,7 +11,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run start
+RUN npm run build
 
 # Generate Prisma Client
 RUN npx prisma generate
@@ -51,4 +51,4 @@ USER nodejs
 EXPOSE 3000
 
 # Start the application
-CMD ["npx", "run", "prisma", "migrate", "deploy","&&", "npm", "run", "start"]
+CMD ["npm", "run", "start"]
