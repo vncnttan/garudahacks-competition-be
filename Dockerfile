@@ -25,8 +25,9 @@ COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/package.json ./
 COPY --from=base /app/tsconfig.json ./
 COPY --from=base /app/prisma ./prisma
-# COPY --from=base /app/public ./public
 
 RUN mkdir -p /app/public
 
-CMD [ "npm", "run", "start"]
+RUN npx prisma generate
+
+CMD ["npm", "run", "start"]
